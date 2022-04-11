@@ -8,7 +8,7 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {name: "Stranger",bgColor: "#ffffff", textColor: "#000000"};
-    this.updateProfile = this.updateProfile;
+    this.updateProfile = this.updateProfile.bind(this);
   }
 
  
