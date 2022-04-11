@@ -1,11 +1,12 @@
 import { Component } from "react";
+import Clock from "./Clock.js"
 //import './Profile.css'
 
 class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = {name: "Stranger",bgColor: "#ffffff", textColor: "#000000"};
-    this.updateProfile = this.updateProfile;
+    this.state = {name: "Stranger",bgColor: "#00ffff", textColor: "#000000"};
+    this.updateProfile = this.updateProfile.bind(this);
   }
 
  
@@ -15,10 +16,12 @@ class Profile extends Component {
   }
 
   render() {
+    document.body.style.backgroundColor = this.state.bgColor;
+    document.body.style.color = this.state.textColor;
 
     return (
-    <div style={{backgroundColor: this.state.bgColor, color: this.state.textColor}}>
-        <p>Hello {this.state.name}</p>
+    <div>
+        <Clock name = {this.state.name}/>
     </div>
     );
   }
