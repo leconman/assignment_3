@@ -1,5 +1,7 @@
 import { Component } from "react";
 import Clock from "./Clock.js"
+import Content from "./Content.js"
+
 //import './Profile.css'
 
 class Profile extends Component {
@@ -22,6 +24,7 @@ class Profile extends Component {
     return (
     <div>
         <Clock name = {this.state.name}/>
+        <Content updateProfile2 = {this.updateProfile}/>
     </div>
     );
   }
