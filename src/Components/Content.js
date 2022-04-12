@@ -1,4 +1,5 @@
 import {Component} from 'react';
+import "./Content.css";
 import axios from 'axios';
 
 class Content extends Component {
@@ -68,16 +69,15 @@ class Content extends Component {
   makeTable = () => {
       let entries = this.state.apiData;
       let table = [];
+
       table.push(
-        <tr>
+        <tr key = {-1}>
             <td><b>ID</b></td>
             <td><b>Description</b></td>
             <td><b>Amount</b></td>
             <td><b>Date</b></td>
         </tr>
       );
-
-
       for (let i =0; i < entries.length; ++i) {
           table.push(
               <tr key = {i}>
@@ -107,7 +107,7 @@ class Content extends Component {
           {this.state.found 
               ? <div>
                   
-                  <table>
+                  <table class = "center">
                       <tbody>
                       {this.makeTable()}
                       </tbody>
@@ -130,7 +130,7 @@ class Content extends Component {
           {this.state.found 
               ? <div>
                   
-                  <table>
+                  <table class = "center">
                       <tbody>
                       {this.makeTable()}
                       </tbody>
