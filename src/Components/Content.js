@@ -4,38 +4,48 @@ import axios from 'axios';
 class Content extends Component {
   constructor(props) {
       super(props);
-      this.state = {showDebit: false, showCredit: false, showForm: false, apiData:[], apiLink: "", found: false};
+      this.state = {showDebit: false, showCredit: false, showForm: false, apiData:[], found: false};
 
   }
 
-  handleLink = async () => {
-      //console.log(this.state.apiLink);
-      try {
-          let response = await axios.get(this.state.apiLink);
+
+  debit = async () => {
+    this.setState({showDebit: true, showCredit: false, showForm: false});
+    //this.setState({apiLink: "https://moj-api.herokuapp.com/debits"});
+    try {
+      let response = await axios.get("https://moj-api.herokuapp.com/debits");
+      
+      this.setState({apiData: response.data,found: true});
+  } catch (error) {
+      if (error.response) {
           
-          this.setState({apiData: response.data,found: true});
-      } catch (error) {
-          if (error.response) {
-              
-              console.log(error.response.data); //Not Found
-              console.log(error.response.status); //404
-              this.setState({found: false});
-          }
-  
+          console.log(error.response.data); //Not Found
+          console.log(error.response.status); //404
+          this.setState({found: false});
       }
 
   }
 
-  debit = () => {
-      this.setState({showDebit: true, showCredit: false, showForm: false});
-      this.setState({apiLink: "https://moj-api.herokuapp.com/debits"});
-      this.handleLink();
   }
   
-  credit = () => {
-      this.setState({showDebit: false, showCredit: true, showForm: false});
-      this.setState({apiLink: "https://moj-api.herokuapp.com/credits"})
-      this.handleLink();
+  credit = async () => {
+    this.setState({showDebit: false, showCredit: true, showForm: false});
+    //this.setState({apiLink: "https://moj-api.herokuapp.com/credits"});
+    try {
+      let response = await axios.get("https://moj-api.herokuapp.com/credits");
+      
+      this.setState({apiData: response.data,found: true});
+  } catch (error) {
+      if (error.response) {
+          
+          console.log(error.response.data); //Not Found
+          console.log(error.response.status); //404
+          this.setState({found: false});
+      }
+
+  }
+
+     
   }
   
   form = () => {
@@ -45,7 +55,7 @@ class Content extends Component {
     var username = document.getElementsByClassName("edit-name");
     var bgcolor = document.getElementsByClassName("edit-bgcolor");
     var textcolor = document.getElementsByClassName("edit-textcolor");
-    console.log(username[0].value);
+    //console.log(username[0].value);
     
     this.props.updateProfile2(username[0].value, bgcolor[0].value, textcolor[0].value);
     this.setState({showDebit: false, showCredit: false, showForm:false});
@@ -58,6 +68,14 @@ class Content extends Component {
   makeTable = () => {
       let entries = this.state.apiData;
       let table = [];
+      table.push(
+        <tr>
+            <td><b>ID</b></td>
+            <td><b>Description</b></td>
+            <td><b>Amount</b></td>
+            <td><b>Date</b></td>
+        </tr>
+      );
 
 
       for (let i =0; i < entries.length; ++i) {
@@ -77,12 +95,15 @@ class Content extends Component {
 
 
   render() {
+   
       if (this.state.showDebit) {
+        
           return (
               <div>
           <button className="debit-button" onClick={this.debit}>Debit</button>
           <button className="credit-button" onClick={this.credit}>Credit</button>
           <button className="form-button" onClick={this.form}>Customize Profile</button>
+          <h2>Debits</h2>
           {this.state.found 
               ? <div>
                   
@@ -99,11 +120,13 @@ class Content extends Component {
           
       }
       else if (this.state.showCredit) {
+        
           return (
               <div>
           <button className="debit-button" onClick={this.debit}>Debit</button>
           <button className="credit-button" onClick={this.credit}>Credit</button>
           <button className="form-button" onClick={this.form}>Customize Profile</button>
+          <h2>Credits</h2>
           {this.state.found 
               ? <div>
                   
@@ -119,6 +142,7 @@ class Content extends Component {
           );
       }
       else if (this.state.showForm) {
+        
           return (
           <div>
               <button className="debit-button" onClick={this.debit}>Debit</button>
@@ -140,6 +164,7 @@ class Content extends Component {
           );
       }
       else {
+        
           return (
               <div>
           <button className="debit-button" onClick={this.debit}>Debit</button>
@@ -148,7 +173,7 @@ class Content extends Component {
       </div>
           );
       }
-      
+   
   
       
   }
