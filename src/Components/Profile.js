@@ -24,7 +24,7 @@ class Profile extends Component {
     return (
     <div>
         <Clock name = {this.state.name}/>
-        <Content updateProfile2 = {this.updateProfile}/>
+        <Content name = {this.state.name} bgColor = {this.state.name} textColor = {this.state.textColor} updateProfile2 = {this.updateProfile}/>
     </div>
     );
   }

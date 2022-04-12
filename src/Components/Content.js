@@ -57,8 +57,19 @@ class Content extends Component {
     var bgcolor = document.getElementsByClassName("edit-bgcolor");
     var textcolor = document.getElementsByClassName("edit-textcolor");
     //console.log(username[0].value);
-    
-    this.props.updateProfile2(username[0].value, bgcolor[0].value, textcolor[0].value);
+    let name = username[0].value;
+    let bgColor = bgcolor[0].value;
+    let textColor = textcolor[0].value;
+    if (name === "") {
+        name = this.props.name;
+    }
+    if (bgColor === "") {
+        bgColor = this.props.bgColor;
+    }
+    if (textColor === "") {
+        textColor = this.props.textColor;
+    }
+    this.props.updateProfile2(name, bgColor, textColor);
     this.setState({showDebit: false, showCredit: false, showForm:false});
   }
 
@@ -150,11 +161,11 @@ class Content extends Component {
               <button className="form-button" onClick={this.form}>Customize Profile</button>
               <div>
                   <p>New Username:</p>
-                  <input className="edit-name" />
+                  <input className="edit-name" placeholder = "Ex: Bob"/>
                   <p>New Background Color:</p>
-                  <input className="edit-bgcolor" />
+                  <input className="edit-bgcolor"placeholder = "Ex: #000000" />
                   <p>New Text Color:</p>
-                  <input className="edit-textcolor" />
+                  <input className="edit-textcolor" placeholder = "Ex: #ffffff"/>
                   <br></br>
                   <button className="save-button" onClick = {this.save}>Save</button>
                   <button className="cancel-button" onClick={this.cancel}>Cancel</button>
